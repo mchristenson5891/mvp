@@ -5,6 +5,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from 'firebase/auth';
+// Add your Firebase credentials
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -67,7 +68,7 @@ function useProvideAuth() {
     return auth.confirmPasswordReset(code, password).then(() => {
       return true;
     });
-
+  };
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {

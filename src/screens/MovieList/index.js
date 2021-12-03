@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import MovieCard from '@components/MovieCard';
-import { Box } from '@mui/system';
+import { Box, Grid } from '@mui/system';
 import Searchbar from '@components/Searchbar';
 import { getPopularMovies, searchMovie } from '@api/index';
 

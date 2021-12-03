@@ -28,15 +28,18 @@ export default function Navbar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position='fixed'>
         <Toolbar>
-          <IconButton
-            size='large'
-            edge='start'
-            color='inherit'
-            aria-label='menu'
-            onClick={() => setShow(true)}
-          >
-            <MenuIcon />
-          </IconButton>
+          {user && (
+            <IconButton
+              size='large'
+              edge='start'
+              color='inherit'
+              aria-label='menu'
+              onClick={() => setShow(true)}
+            >
+              <MenuIcon />
+            </IconButton>
+          )}
+
           <Link href='/'>
             <Box display='flex' alignItems='center'>
               <Typography variant='h6' component='div'>

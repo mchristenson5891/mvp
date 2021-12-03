@@ -14,17 +14,6 @@ export default function TemporaryDrawer({ show, setShow }) {
   const list = () => (
     <Box sx={{ width: 250 }} role='presentation'>
       <List>
-        <Link href='/login'>
-          <ListItem button onClick={() => setShow(false)}>
-            <ListItemIcon>
-              <AccountBoxIcon />
-            </ListItemIcon>
-            <ListItemText primary={'Account'} />
-          </ListItem>
-        </Link>
-      </List>
-      <Divider />
-      <List>
         <ListItem button>
           <ListItemIcon>
             <FavoriteIcon />

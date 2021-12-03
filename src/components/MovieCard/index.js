@@ -1,20 +1,42 @@
-import * as React from 'react';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
+import { useEffect, useState } from 'react';
+import {
+  Card,
+  CardMedia,
+  CardContent,
+  CardActions,
+  IconButton,
+  Typography,
+} from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
-export default function RecipeReviewCard({ movie }) {
-  console.log(
-    '🚀 ~ file: index.js ~ line 13 ~ RecipeReviewCard ~ movie',
-    movie
-  );
+import { doLikeMovie, getLikes, doRemoveLikeMovie } from '@services/firestore';
+import { useAuth } from '@hooks/useAuth';
+
+import Link from 'next/link';
+
+export default function MovieCard({ movie }) {
+  const { user } = useAuth();
+  const [likes, setLikes] = useState([]);
+
+  useEffect(async () => {
+    const m = await getLikes(movie.id);
+    setLikes(m?.likes ? m.likes : []);
+  }, [user]);
+
+  const doUpdateLikedMovie = async () => {
+    if (likes.includes(user.uid)) {
+      await doRemoveLikeMovie(movie.id, user.uid);
+      setLikes(likes.filter((l) => l !== user.uid));
+    } else {
+      try {
+        await doLikeMovie(movie.id, user.uid);
+        setLikes([...likes, user.uid]);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  };
   return (
     <Card
       sx={{
@@ -23,34 +45,42 @@ export default function RecipeReviewCard({ movie }) {
         boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)',
       }}
     >
-      <CardHeader
-        action={
-          <IconButton aria-label='settings'>
-            <MoreVertIcon />
-          </IconButton>
-        }
-        title={movie.title}
-        subheader={movie.release_date}
-      />
-      <CardMedia
-        component='img'
-        // height='194'
-        image={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-        alt='Paella dish'
-      />
+      {movie.poster_path && (
+        <CardMedia
+          component='img'
+          image={
+            movie.poster_path &&
+            `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+          }
+          alt={movie.title}
+        />
+      )}
+
       <CardContent>
+        <Link href={`/movies/${movie.id}`}>
+          <Typography gutterBottom variant='h6' component='div'>
+            {movie.title}
+          </Typography>
+        </Link>
         <Typography variant='body2' color='text.secondary'>
           {movie.overview}
         </Typography>
       </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label='add to favorites'>
-          <FavoriteIcon sx={{ color: 'pink' }} />
-        </IconButton>
-        <IconButton aria-label='add to watched'>
-          <VisibilityIcon color='primary' />
-        </IconButton>
-      </CardActions>
+      {user && (
+        <CardActions disableSpacing>
+          <IconButton
+            aria-label='add to favorites'
+            onClick={doUpdateLikedMovie}
+          >
+            <FavoriteIcon
+              sx={{ color: likes.includes(user?.uid) ? 'pink' : 'inherit' }}
+            />
+          </IconButton>
+          {/* <IconButton aria-label='add to watched'>
+            <VisibilityIcon color='primary' />
+          </IconButton> */}
+        </CardActions>
+      )}
     </Card>
   );
 }

@@ -1,10 +1,20 @@
 import Layout from '@layout/index';
+import Head from 'next/head';
+import { ProvideAuth } from '@hooks/useAuth';
 
 function MyApp({ Component, pageProps }) {
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <>
+      <Head>
+        <title>I ♥️ MOVIES</title>
+        <meta name='viewport' content='initial-scale=1.0, width=device-width' />
+      </Head>
+      <ProvideAuth>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </ProvideAuth>
+    </>
   );
 }
 

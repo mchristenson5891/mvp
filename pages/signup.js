@@ -12,18 +12,30 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+
+import { useAuth } from '@hooks/useAuth';
+import { useForm } from 'react-hook-form';
 
 const theme = createTheme();
 
 export default function SignUp() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+  const auth = useAuth();
+  const router = useRouter();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = async ({ email, password }) => {
+    try {
+      await auth.signup(email, password);
+      router.push('/');
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -40,7 +52,12 @@ export default function SignUp() {
         <Typography component='h1' variant='h5'>
           Sign up
         </Typography>
-        <Box component='form' noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+        <Box
+          component='form'
+          noValidate
+          onSubmit={handleSubmit(onSubmit)}
+          sx={{ mt: 3 }}
+        >
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -71,6 +88,7 @@ export default function SignUp() {
                 label='Email Address'
                 name='email'
                 autoComplete='email'
+                {...register('email', { required: true })}
               />
             </Grid>
             <Grid item xs={12}>
@@ -82,6 +100,7 @@ export default function SignUp() {
                 type='password'
                 id='password'
                 autoComplete='new-password'
+                {...register('password', { required: true })}
               />
             </Grid>
           </Grid>

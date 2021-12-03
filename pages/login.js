@@ -14,18 +14,28 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import { useForm } from 'react-hook-form';
+import { useAuth } from '@hooks/useAuth';
+import { useRouter } from 'next/router';
 
 const theme = createTheme();
 
 export default function SignIn() {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  console.log('🚀 ~ file: login.js ~ line 27 ~ SignIn ~ errors', errors);
+  const { signin } = useAuth();
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = async ({ email, password }) => {
+    try {
+      await signin(email, password);
+      router.push('/');
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <ThemeProvider theme={theme}>

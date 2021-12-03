@@ -30,6 +30,7 @@ export default function Navbar() {
         <Toolbar>
           {user && (
             <IconButton
+              sx={{ display: { xs: 'black', md: 'none' } }}
               size='large'
               edge='start'
               color='inherit'

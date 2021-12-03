@@ -55,9 +55,9 @@ export default function MovieCard({ movie }) {
             sx={{ marginLeft: 'auto', position: 'absolute', right: 0 }}
           >
             {likes.includes(user?.uid) ? (
-              <FavoriteIcon sx={{ color: 'pink' }} />
+              <FavoriteIcon sx={{ color: 'pink' }} fontSize='large' />
             ) : (
-              <FavoriteBorderIcon sx={{ color: 'white' }} />
+              <FavoriteBorderIcon sx={{ color: 'white' }} fontSize='large' />
             )}
           </IconButton>
         </>

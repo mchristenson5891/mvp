@@ -36,7 +36,7 @@ const MovieList = () => {
   return (
     <>
       <Searchbar onChange={onChange} />
-      <Box mt={4}>
+      <Box mt={4} display='flex' flexWrap='wrap' justifyContent='space-between'>
         {filterMovies.map((m, i) => (
           <MovieCard key={i} movie={m} />
         ))}

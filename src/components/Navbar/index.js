@@ -41,7 +41,7 @@ export default function Navbar() {
           )}
 
           <Link href='/'>
-            <Box display='flex' alignItems='center'>
+            <Box display='flex' alignItems='center' sx={{ cursor: 'pointer' }}>
               <Typography variant='h6' component='div'>
                 I
               </Typography>

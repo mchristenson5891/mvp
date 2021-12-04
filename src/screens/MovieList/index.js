@@ -53,18 +53,23 @@ const MovieList = () => {
     <>
       <Searchbar setSearch={setSearch} />
 
-      <Box mt={4} display='flex' flexWrap='wrap' justifyContent='space-between'>
-        <InfiniteScroll
-          dataLength={movies.length}
-          next={fetchMoreMovies}
-          hasMore={true}
-          loader={<h4>Loading...</h4>}
+      <InfiniteScroll
+        dataLength={movies.length}
+        next={fetchMoreMovies}
+        hasMore={true}
+        loader={<h4>Loading...</h4>}
+      >
+        <Box
+          mt={4}
+          display='flex'
+          flexWrap='wrap'
+          justifyContent='space-between'
         >
           {filterMovies.map((m, i) => (
             <MovieCard key={i} movie={m} />
           ))}
-        </InfiniteScroll>
-      </Box>
+        </Box>
+      </InfiniteScroll>
     </>
   );
 };

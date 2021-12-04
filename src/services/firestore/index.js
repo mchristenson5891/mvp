@@ -6,6 +6,7 @@ import {
   setDoc,
   doc,
   arrayUnion,
+  getDocs,
   updateDoc,
   query,
   where,
@@ -20,6 +21,12 @@ export const getLikes = async (uid) => {
   const docRef = doc(db, 'movies', `${uid}`);
   const querySnapshot = await getDoc(docRef);
   return querySnapshot.data();
+};
+
+export const getUserLikedMovies = async (uid) => {
+  const q = query(moviesRef, where('likes', 'array-contains', `${uid}`));
+  const querySnapshot = await getDocs(q);
+  return querySnapshot.docs.map((d) => d.id);
 };
 
 export const doLikeMovie = async (movieId, uid) => {

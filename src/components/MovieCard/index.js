@@ -16,7 +16,7 @@ import { useAuth } from '@hooks/useAuth';
 
 import Link from 'next/link';
 
-export default function MovieCard({ movie }) {
+export default function MovieCard({ movie, isFavorite }) {
   const { user } = useAuth();
   const [likes, setLikes] = useState([]);
 
@@ -47,7 +47,7 @@ export default function MovieCard({ movie }) {
         position: 'relative',
       }}
     >
-      {user && (
+      {user && !isFavorite && (
         <>
           <IconButton
             aria-label='add to favorites'

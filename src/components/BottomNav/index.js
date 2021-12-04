@@ -22,7 +22,6 @@ export default function BottomNav() {
       <BottomNavigation fixed showLabels>
         <BottomNavigationAction label='Movies' icon={<TheatersIcon />} />
         <BottomNavigationAction label='Favorites' icon={<FavoriteIcon />} />
-        <BottomNavigationAction label='Nearby' icon={<LocationOnIcon />} />
       </BottomNavigation>
     </Paper>
   );

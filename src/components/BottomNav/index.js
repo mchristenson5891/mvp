@@ -19,7 +19,7 @@ export default function BottomNav() {
       }}
       elevation={3}
     >
-      <BottomNavigation fixed showLabels>
+      <BottomNavigation showLabels>
         <BottomNavigationAction label='Movies' icon={<TheatersIcon />} />
         <BottomNavigationAction label='Favorites' icon={<FavoriteIcon />} />
       </BottomNavigation>

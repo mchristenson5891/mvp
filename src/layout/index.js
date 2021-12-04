@@ -12,6 +12,7 @@ export default function Layout({ children }) {
       <Box mt={10} />
       <Container maxWidth='xl'>{children}</Container>
       <BottomNav />
+      <Box mb={10} />
     </>
   );
 }

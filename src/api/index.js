@@ -5,13 +5,21 @@ const baseUrl = axios.create({
   params: { api_key: process.env.NEXT_PUBLIC_TMDB_API_KEY },
 });
 
-export const getPopularMovies = () => baseUrl.get(`/movie/popular`);
+export const getPopularMovies = (page) =>
+  baseUrl({
+    method: 'GET',
+    url: '/movie/popular',
+    params: {
+      page,
+    },
+  });
 
-export const searchMovie = (query) =>
+export const searchMovie = (query, page) =>
   baseUrl({
     method: 'GET',
     url: '/search/movie',
     params: {
       query,
+      page,
     },
   });

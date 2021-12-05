@@ -1,6 +1,6 @@
 import Layout from '@layout/index';
 import Head from 'next/head';
-import { ProvideAuth } from '@hooks/useAuth';
+import { ProvideAuth } from '@context/auth';
 
 function MyApp({ Component, pageProps }) {
   return (

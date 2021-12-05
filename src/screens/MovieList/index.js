@@ -41,17 +41,20 @@ const MovieList = () => {
       setSearchPage(1);
       return setFilterMovies(movies);
     }
+  }, [search]);
+
+  const doSearchMovie = async () => {
     try {
       const { data } = await searchMovie(search, searchPage);
       setFilterMovies(data.results);
     } catch (err) {
       console.error(err);
     }
-  }, [search]);
+  };
 
   return (
     <>
-      <Searchbar setSearch={setSearch} />
+      <Searchbar setSearch={setSearch} doSearchMovie={doSearchMovie} />
 
       <InfiniteScroll
         dataLength={movies.length}

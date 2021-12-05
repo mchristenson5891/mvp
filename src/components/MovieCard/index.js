@@ -12,7 +12,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
 import { doLikeMovie, getLikes, doRemoveLikeMovie } from '@services/firestore';
-import { useAuth } from '@hooks/useAuth';
+import { useAuth } from '@context/auth';
 
 import Link from 'next/link';
 

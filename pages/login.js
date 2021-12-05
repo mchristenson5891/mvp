@@ -14,7 +14,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import { useForm } from 'react-hook-form';
-import { useAuth } from '@hooks/useAuth';
+import { useAuth } from '@context/auth';
 import { useRouter } from 'next/router';
 
 const theme = createTheme();
@@ -24,16 +24,24 @@ export default function SignIn() {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm();
   const { signin } = useAuth();
 
   const onSubmit = async ({ email, password }) => {
     try {
-      await signin(email, password);
+      const response = await signin(email, password);
       router.push('/');
     } catch (err) {
-      console.error(err);
+      if (
+        err?.code === 'auth/invalid-email' ||
+        err?.code === 'auth/user-not-found'
+      ) {
+        setError('email', { message: 'User not found' });
+      } else if (err?.code === 'auth/wrong-password') {
+        setError('password', { message: 'Check username or password' });
+      }
     }
   };
 
@@ -69,6 +77,7 @@ export default function SignIn() {
               name='email'
               autoComplete='email'
               autoFocus
+              helperText={errors.email && errors.email.message}
               {...register('email', { required: true })}
             />
             <TextField
@@ -81,6 +90,7 @@ export default function SignIn() {
               type='password'
               id='password'
               autoComplete='current-password'
+              helperText={errors.password && errors.password.message}
               {...register('password', { required: true })}
             />
             <Button

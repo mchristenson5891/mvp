@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useContext, createContext } from 'react';
+import { useState, useEffect } from 'react';
 import { initializeApp } from 'firebase/app';
 import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from 'firebase/auth';
-// Add your Firebase credentials
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -15,31 +14,20 @@ const firebaseConfig = {
   messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
-
-const firebase = initializeApp(firebaseConfig);
+initializeApp(firebaseConfig);
 const auth = getAuth();
 
-const authContext = createContext();
-
-export function ProvideAuth({ children }) {
-  const auth = useProvideAuth();
-  return <authContext.Provider value={auth}>{children}</authContext.Provider>;
-}
-
-export const useAuth = () => {
-  return useContext(authContext);
-};
-
-function useProvideAuth() {
+export default function useProvideAuth() {
   const [user, setUser] = useState(null);
 
-  const signin = (email, password) => {
-    return signInWithEmailAndPassword(auth, email, password).then(
-      (response) => {
-        setUser(response.user);
-        return response.user;
-      }
+  const signin = async (email, password) => {
+    const response = await signInWithEmailAndPassword(auth, email, password);
+    console.log(
+      '🚀 ~ file: useAuth.js ~ line 38 ~ signin ~ response',
+      response
     );
+    setUser(response.user);
+    return response;
   };
   const signup = (email, password) => {
     console.log(

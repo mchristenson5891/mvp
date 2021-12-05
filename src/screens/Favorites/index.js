@@ -1,5 +1,5 @@
 import { getUserLikedMovies } from '@services/firestore';
-import { useAuth } from '@hooks/useAuth';
+import { useAuth } from '@context/auth';
 import { useEffect, useState } from 'react';
 import MovieCard from '@components/MovieCard';
 

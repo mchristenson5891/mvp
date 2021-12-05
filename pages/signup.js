@@ -14,7 +14,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import { useAuth } from '@hooks/useAuth';
+import { useAuth } from '@context/auth';
 import { useForm } from 'react-hook-form';
 
 const theme = createTheme();

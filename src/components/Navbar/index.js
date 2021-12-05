@@ -9,7 +9,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import Link from 'next/link';
-import { useAuth } from '@hooks/useAuth';
+import { useAuth } from '@context/auth';
 import Drawer from '@components/Drawer';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
